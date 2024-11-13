@@ -19,10 +19,10 @@ namespace UniqueSeafood.Models
         [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Error: Must use Alphabetical Characters")]
         public string LastName { get; set; }
         [Required]
-        [Range(1, 60, ErrorMessage = "Error: Number of Guests must be between 0 to 60")]
+        [Range(1, 60, ErrorMessage = "Error: Number of Guests must be between 1 to 60")]
         public int NumberOfGuests { get; set; }
         [Required]
-        [RegularExpression(@"^\({0,1}((0|\+61)(2|4|3|7|8)){0,1}\){0,1}(\ |-){0,1}[0-9]{2}(\ |-){0,1}[0-9]{2}(\ |-){0,1}[0-9]{1}(\ |-){0,1}[0-9]{3}$", ErrorMessage = "Error: Must be an Australian Number")]
+        [RegularExpression(@"^\({0,1}((0|\+61)(2|4|3|7|8)){0,1}\){0,1}(\ |-){0,1}[0-9]{2}(\ |-){0,1}[0-9]{2}(\ |-){0,1}[0-9]{1}(\ |-){0,1}[0-9]{3}$", ErrorMessage = "Error: Must be an Contact Number")]
         public string ContactNumber { get; set; }
         [RegularExpression(@"^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$", ErrorMessage = "Error: Wrong E-Mail Format")]
         //Email Address and Special Request are Optional data fields that the user can type in

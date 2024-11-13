@@ -14,6 +14,7 @@
 <p>Are you sure you want to delete this?</p>
 <div>
     <hr />
+    <!--If Booking record is not found, it will be loading. Otherwise if found, the record will be shown in order for the user to decide whether to delete record or not-->
     @if (booking is null)
     {
         <p><em>Loading...</em></p>
@@ -67,7 +68,7 @@
 
     [SupplyParameterFromQuery]
     private int Id { get; set; }
-
+    //To find the record chosen by the user. Utilises Async mode to achieve this
     protected override async Task OnInitializedAsync()
     {
         using var context = DbFactory.CreateDbContext();
@@ -78,7 +79,7 @@
             NavigationManager.NavigateTo("notfound");
         }
     }
-
+    //Deletes the booking from the database, save these changes and redirects user back to list of bookings
     private async Task DeleteTheBooking()
     {
         using var context = DbFactory.CreateDbContext();

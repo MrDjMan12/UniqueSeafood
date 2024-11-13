@@ -13,6 +13,7 @@
 <h1>List of Bookings</h1>
 
 <hr />
+<!--Table to show the list of records from the booking database-->
 <QuickGrid Class="table" Items="context.Booking">
     <PropertyColumn Property="booking => booking.Title" />
     <PropertyColumn Property="booking => booking.FirstName" title="First Name" />
@@ -24,6 +25,7 @@
     <PropertyColumn Property="booking => booking.BookingDate" title="Booking Date"/>
     <PropertyColumn Property="booking => booking.BookingTime" title="Booking Time"/>
 
+    <!--Utilsing Icons from Blazor Bootstrap to be used as links to pages-->
     <TemplateColumn Context="booking">
         <a href="@($"bookings/edit-booking?id={booking.Id}")" class="button-links">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">

@@ -12,6 +12,7 @@
 <h1>Edit Booking</h1>
 
 <hr />
+<!--If Booking record is not found, it will be still loading. Otherwise if found, the record will be shown in a form were the user can edit.-->
 @if (Booking is null)
 {
     <p><em>Loading...</em></p>
@@ -54,12 +55,12 @@ else
                     <ValidationMessage For="() => Booking.ContactNumber" class="text-danger" />
                 </div>
                 <div class="mb-3">
-                    <label for="emailaddress" class="form-label">Email Address:</label>
+                    <label for="emailaddress" class="form-label">Email Address (Optional):</label>
                     <InputText id="emailaddress" @bind-Value="Booking.EmailAddress" class="form-control" />
                     <ValidationMessage For="() => Booking.EmailAddress" class="text-danger" />
                 </div>
                 <div class="mb-3">
-                    <label for="specialrequest" class="form-label">Special Request:</label>
+                    <label for="specialrequest" class="form-label">Special Request (Optional):</label>
                     <InputText id="specialrequest" @bind-Value="Booking.SpecialRequest" class="form-control" />
                     <ValidationMessage For="() => Booking.SpecialRequest" class="text-danger" />
                 </div>
@@ -86,7 +87,7 @@ else
 
     [SupplyParameterFromForm]
     private Booking? Booking { get; set; }
-
+    //To find the record chosen by the user. Utilises Async mode to achieve this
     protected override async Task OnInitializedAsync()
     {
         using var context = DbFactory.CreateDbContext();
@@ -98,8 +99,10 @@ else
         }
     }
 
-    // To protect from overposting attacks, enable the specific properties you want to bind to.
+    // To protect from overposting attacks, enable the specific properties you want to bind to
     // For more information, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
+
+    //To modify the record changed by the user and save it within the database. After process is done, user is redirected to the list of bookings
     private async Task UpdateBooking()
     {
         using var context = DbFactory.CreateDbContext();
@@ -123,7 +126,7 @@ else
 
         NavigationManager.NavigateTo("/bookings");
     }
-
+    //To find whether the booking record exists or not
     private bool BookingExists(int id)
     {
         using var context = DbFactory.CreateDbContext();

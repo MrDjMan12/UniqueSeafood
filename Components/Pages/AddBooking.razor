@@ -38,7 +38,7 @@
                 <InputText id="lastname" @bind-Value="Booking.LastName" class="form-control" /> 
                 <ValidationMessage For="() => Booking.LastName" class="text-danger" /> 
             </div>        
-            <!--InputNumber is used as only an integer between 0 - 60 is needed -->
+            <!--InputNumber is used as only an integer between 1 - 60 is needed -->
             <div class="mb-3">
                 <label for="numberofguests" class="form-label">Number Of Guests:</label> 
                 <InputNumber id="numberofguests" @bind-Value="Booking.NumberOfGuests" class="form-control"/> 
@@ -50,12 +50,12 @@
                 <ValidationMessage For="() => Booking.ContactNumber" class="text-danger" /> 
             </div>        
             <div class="mb-3">
-                <label for="emailaddress" class="form-label">Email Address:</label> 
+                <label for="emailaddress" class="form-label">Email Address (Optional):</label> 
                 <InputText id="emailaddress" @bind-Value="Booking.EmailAddress" class="form-control" /> 
                 <ValidationMessage For="() => Booking.EmailAddress" class="text-danger" /> 
             </div>        
             <div class="mb-3">
-                <label for="specialrequest" class="form-label">Special Request:</label> 
+                <label for="specialrequest" class="form-label">Special Request (Optional):</label> 
                 <InputText id="specialrequest" @bind-Value="Booking.SpecialRequest" class="form-control" /> 
                 <ValidationMessage For="() => Booking.SpecialRequest" class="text-danger" /> 
             </div>        
@@ -79,6 +79,7 @@
     private Booking Booking { get; set; } = new();
 
     // To protect from overposting attacks, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
+    //This adds the booking to the database using async mode. After process is done, user is redirected to the list of booking records
     private async Task AddTheBooking()
     {
         using var context = DbFactory.CreateDbContext();
