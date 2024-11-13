@@ -1,0 +1,89 @@
+﻿@page "/add-booking"
+@using Microsoft.EntityFrameworkCore
+@using UniqueSeafood.Models
+@inject IDbContextFactory<UniqueSeafood.Data.UniqueSeafoodContext> DbFactory
+@inject NavigationManager NavigationManager
+@rendermode InteractiveServer
+
+<PageTitle>Add Booking</PageTitle>
+
+<!--Add a new Booking Record-->
+
+<h1>Add Booking</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <!--EditForm is used to allow for validation based on data attributes in the Model and data binding-->
+        <EditForm method="post" Model="Booking" OnValidSubmit="AddTheBooking" FormName="create" Enhance>
+            <DataAnnotationsValidator />
+            <div class="mb-3">
+                <!--InputSelect is used for the user to pick one of the options available -->
+                <label for="title" class="form-label">Title:</label>
+                <InputSelect id="title" @bind-Value="Booking.Title" class="form-control">
+                    <option value="Mr">Mr</option>
+                    <option value="Mrs">Mrs</option>
+                    <option value="Miss">Miss</option>
+                    <option value="Ms">Ms</option>
+                </InputSelect>
+                <ValidationMessage For="() => Booking.Title" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="firstname" class="form-label">First Name:</label> 
+                <InputText id="firstname" @bind-Value="Booking.FirstName" class="form-control" /> 
+                <ValidationMessage For="() => Booking.FirstName" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="lastname" class="form-label">Last Name:</label> 
+                <InputText id="lastname" @bind-Value="Booking.LastName" class="form-control" /> 
+                <ValidationMessage For="() => Booking.LastName" class="text-danger" /> 
+            </div>        
+            <!--InputNumber is used as only an integer between 0 - 60 is needed -->
+            <div class="mb-3">
+                <label for="numberofguests" class="form-label">Number Of Guests:</label> 
+                <InputNumber id="numberofguests" @bind-Value="Booking.NumberOfGuests" class="form-control"/> 
+                <ValidationMessage For="() => Booking.NumberOfGuests" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="contactnumber" class="form-label">Contact Number:</label> 
+                <InputText id="contactnumber" @bind-Value="Booking.ContactNumber" class="form-control" /> 
+                <ValidationMessage For="() => Booking.ContactNumber" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="emailaddress" class="form-label">Email Address:</label> 
+                <InputText id="emailaddress" @bind-Value="Booking.EmailAddress" class="form-control" /> 
+                <ValidationMessage For="() => Booking.EmailAddress" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="specialrequest" class="form-label">Special Request:</label> 
+                <InputText id="specialrequest" @bind-Value="Booking.SpecialRequest" class="form-control" /> 
+                <ValidationMessage For="() => Booking.SpecialRequest" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="bookingdate" class="form-label">Booking Date:</label> 
+                <InputDate id=" bookingdate" @bind-Value="Booking.BookingDate" class="form-control" />
+                <ValidationMessage For="() => Booking.BookingDate" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="bookingtime" class="form-label">Booking Time:</label> 
+                <InputDate Type="InputDateType.Time" id="bookingtime" @bind-Value="Booking.BookingTime" class="form-control" />
+                <ValidationMessage For="() => Booking.BookingTime" class="text-danger" /> 
+            </div>        
+            <button type="submit" class="btn btn-primary">Create</button>
+        </EditForm>
+    </div>
+</div>
+
+@code {
+    [SupplyParameterFromForm]
+    private Booking Booking { get; set; } = new();
+
+    // To protect from overposting attacks, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
+    private async Task AddTheBooking()
+    {
+        using var context = DbFactory.CreateDbContext();
+        context.Booking.Add(Booking);
+        await context.SaveChangesAsync();
+        NavigationManager.NavigateTo("/bookings");
+    }
+}
